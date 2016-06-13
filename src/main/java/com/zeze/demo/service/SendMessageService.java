@@ -10,4 +10,5 @@ public interface SendMessageService {
 	String recvMsg(ChannelId id, Object msg);
 	String saveChannelId(String did, ChannelId id);
 	
+	void sendData(Object obj);
 }

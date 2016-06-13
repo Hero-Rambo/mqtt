@@ -11,15 +11,20 @@ public class MqttClientTest {
 	public static void main(String[] args) throws InterruptedException {
 		
 		String topic        = "MQTT Examples";
+		byte[] bs = topic.getBytes();
+		
         String content      = "Message from MqttPublishSample";
-        int qos             = 0;
-        String broker       = "tcp://127.0.0.1:5555";
-        String clientId     = "clientTest";
+        int qos             = 1;
+        String broker       = "tcp://192.168.12.195:1883";
+        String clientId     = "guest";
+        
         MemoryPersistence persistence = new MemoryPersistence();
 
         try {
             MqttClient sampleClient = new MqttClient(broker, clientId, persistence);
             MqttConnectOptions connOpts = new MqttConnectOptions();
+            connOpts.setPassword("guest".toCharArray());
+            connOpts.setUserName(clientId);
             connOpts.setCleanSession(true);
             System.out.println("Connecting to broker: "+broker);
             sampleClient.connect(connOpts);

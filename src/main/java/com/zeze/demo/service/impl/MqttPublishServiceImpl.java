@@ -29,28 +29,26 @@ public class MqttPublishServiceImpl implements MqttPublishService {
 		return null;
 	}
 
-	
 	//Qos = 0
 	@Override
 	public String sendMsg(String clientId, Object msg) {
 		
-		ClientMapper clientMapper = (ClientMapper) MqttStaticUtil.nativeCache.get(clientId);
+//		ClientMapper clientMapper = (ClientMapper) MqttStaticUtil.nativeCache.get(clientId);
+		ClientMapper clientMapper = (ClientMapper) MqttServerHandler.cacheService.get(clientId);
 		ChannelId cid = clientMapper.getChannelId();
 		Channel ch = MqttServerHandler.channelGroup.find(cid);
 		ch.writeAndFlush(msg);
-		
 		return "message sent";
 	}
 
-	
 	//Qos = 1
 	@Override
 	public String checkAndSendMsg(String clientId, Object msg) {
 		
-		ClientMapper clientMapper = (ClientMapper) MqttStaticUtil.nativeCache.get(clientId);
+		ClientMapper clientMapper = (ClientMapper) MqttServerHandler.cacheService.get(clientId);
 		ChannelId cid = clientMapper.getChannelId();
 		ChannelStatusMapper channelStatusMapper = 
-				(ChannelStatusMapper) MqttStaticUtil.nativeCache.get(cid.asLongText());
+				(ChannelStatusMapper) MqttServerHandler.cacheService.get(cid.asLongText());
 		Channel ch = MqttServerHandler.channelGroup.find(cid);
 
 		for (int i=0; i<repeatTimes; i++) {
@@ -65,7 +63,7 @@ public class MqttPublishServiceImpl implements MqttPublishService {
 				e.printStackTrace();
 			}
 		}
-		MqttStaticUtil.nativeCache.remove(cid.asLongText());
+		MqttServerHandler.cacheService.remove(cid.asLongText());
 		return "message sent!";
 	}
 
@@ -73,10 +71,10 @@ public class MqttPublishServiceImpl implements MqttPublishService {
 	@Override
 	public String checkWaitAndSendMsg(String clientId, Object msg) {
 		
-		ClientMapper clientMapper = (ClientMapper) MqttStaticUtil.nativeCache.get(clientId);
+		ClientMapper clientMapper = (ClientMapper) MqttServerHandler.cacheService.get(clientId);
 		ChannelId cid = clientMapper.getChannelId();
 		ChannelStatusMapper channelStatusMapper = 
-				(ChannelStatusMapper) MqttStaticUtil.nativeCache.get(cid.asLongText());
+				(ChannelStatusMapper) MqttServerHandler.cacheService.get(cid.asLongText());
 		Channel ch = MqttServerHandler.channelGroup.find(cid);
 		
 		for (int i=0; i<repeatTimes; i++) {
@@ -92,7 +90,7 @@ public class MqttPublishServiceImpl implements MqttPublishService {
 				e.printStackTrace();
 			}
 		}
-		MqttStaticUtil.nativeCache.remove(cid.asLongText());
+		MqttServerHandler.cacheService.remove(cid.asLongText());
 		return "message sent!";
 	}
 	
@@ -102,7 +100,6 @@ public class MqttPublishServiceImpl implements MqttPublishService {
 		for (String clientId : clientIds) {
 			//开启发送线程！
 			executor.execute(new SendTask(clientId, mqttPublishMessage));
-			MqttStaticUtil.nativeCache.remove(clientId);
 		}
 		
 		return null;

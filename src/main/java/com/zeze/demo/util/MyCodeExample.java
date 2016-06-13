@@ -5,7 +5,6 @@ public class MyCodeExample {
 	public static void main(String[] args) {
 
 		String str = "20160505102859";
-		
 		System.out.println("size: " + Integer.toHexString(str.length() & 0xFF));
 		
 		byte[] buf = str.getBytes();

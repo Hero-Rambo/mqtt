@@ -26,7 +26,17 @@
 	<bean id="cacheServiceImpl" class="com.zeze.demo.service.impl.CacheServiceImpl" scope="singleton"></bean>
 	<bean id="mqttPublishServiceImpl" class="com.zeze.demo.service.impl.MqttPublishServiceImpl" scope="singleton"></bean>
 	
-	<bean id="SendMessageServiceImpl" class="com.zeze.demo.service.impl.SendMessageServiceImpl" scope="singleton"></bean>
- 	<!-- <import resource="classpath:mina-server.xml" /> -->
+	<!-- <bean id="SendMessageServiceImpl" class="com.zeze.demo.service.impl.SendMessageServiceImpl" scope="singleton"></bean>
+ 	 -->
+  	<!-- <import resource="classpath:mina-server.xml" /> -->
+	
+<!-- 	<bean id="jedisConnFactory" 
+    	class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" 
+    	p:use-pool="true"/>
+
+	redis template definition
+	<bean id="redisTemplate" 
+    	class="org.springframework.data.redis.core.RedisTemplate" 
+    	p:connection-factory-ref="jedisConnFactory"/> -->
 	
 </beans>

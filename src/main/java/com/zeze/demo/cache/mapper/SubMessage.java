@@ -1,6 +1,14 @@
 package com.zeze.demo.cache.mapper;
 
-public 	class SubMessage {
+import java.io.Serializable;
+
+public 	class SubMessage implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	
 	private String publishId;
 	private Integer pubQos;

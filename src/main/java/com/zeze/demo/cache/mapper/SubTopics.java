@@ -1,7 +1,15 @@
 package com.zeze.demo.cache.mapper;
 
-public class SubTopics {
+import java.io.Serializable;
 
+public class SubTopics implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
 	private String topicName;
 	private Integer subQos;
 	

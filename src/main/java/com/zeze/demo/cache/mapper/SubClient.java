@@ -1,6 +1,14 @@
 package com.zeze.demo.cache.mapper;
 
-public class SubClient {
+import java.io.Serializable;
+
+public class SubClient implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	
 	private String clientId;
 	private Integer messageId;
